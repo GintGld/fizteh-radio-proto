@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package storage;
+
+option go_package = "gld.storage.v1;storagev1";
+
+service FileService {
+    rpc Upload(stream UploadRequest) returns(UploadResponse);
+    rpc Download(DownloadRequest) returns(stream DownloadResponse);
+    rpc Delete(DeleteRequest) returns(DeleteResponse);
+}
+
+message UploadRequest {
+    bytes chunk = 1;
+}
+message UploadResponse {
+    int32 file_id = 1;
+    int32 size = 2;
+}
+
+message DownloadRequest {
+    int32 file_id = 1;
+}
+message DownloadResponse {
+    bytes chunk = 1;
+}
+
+message DeleteRequest {
+    int32 file_id = 1;
+}
+message DeleteResponse {
+    bool success = 1;
+}
